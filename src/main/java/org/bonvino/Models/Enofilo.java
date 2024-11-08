@@ -20,6 +20,24 @@ public class Enofilo {
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
+    private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("wine_persistence_unit");
+
+
+
+    public String obtenerNombreEnofiloSuscripto(){
+        EntityManager em = emf.createEntityManager();
+
+        try {
+            // Buscar el usuario asociado al enófilo y obtener el nombre
+            TypedQuery<String> usuarioQuery = em.createQuery(
+                    "SELECT u.nombre FROM Usuario u WHERE u.id = :usuarioId", String.class);
+            usuarioQuery.setParameter("usuarioId", this.usuario.getId());
+            return usuarioQuery.getSingleResult();
+        } finally {
+            em.close();
+        }
+    }
+
     // Getters y Setters
 
     public Long getId() {

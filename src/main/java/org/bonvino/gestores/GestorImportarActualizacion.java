@@ -1,18 +1,17 @@
 package org.bonvino.gestores;
 
 import org.bonvino.Models.*;
+import org.bonvino.interfaces.IObservadorActualizacionDeBodega;
+import org.bonvino.interfaces.ISujetoActualizacionDeBodega;
 import org.bonvino.pantallas.PantallaImportarActualizacion;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.TypedQuery;
+import javax.persistence.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class GestorImportarActualizacion {
+public class GestorImportarActualizacion  implements ISujetoActualizacionDeBodega {
     private EntityManagerFactory emf;
 
 
@@ -59,7 +58,7 @@ public class GestorImportarActualizacion {
         ApiActualizaciones apiActualizaciones = new ApiActualizaciones();
         List<Vino> vinosActualizacion = apiActualizaciones.obtenerActualizaciones(bodegaSeleccionada);
 
-        List<String> resumenVinosActualizados = new ArrayList<>();
+        List<String> vinosActualizadosOCreados = new ArrayList<>();
 
         try {
             for (Vino vino : vinosActualizacion) {
@@ -77,19 +76,19 @@ public class GestorImportarActualizacion {
                 if (!resultado.isEmpty()) {
                     // Si el vino ya existe, actualiza sus datos
                     actualizarVinoExistente(resultado.get(0), vino);
-                    resumenVinosActualizados.add(resultado.get(0).formatoResumen());
+                    vinosActualizadosOCreados.add(resultado.get(0).formatoResumen());
                 } else {
                     // Si el vino no existe, crea un nuevo registro
                     Varietal varietal = this.buscarVarietal(vino);
                     List<Maridaje> maridajes = this.buscarMaridaje(vino);
                     this.crearVinos(vino, varietal, maridajes);
-                    resumenVinosActualizados.add(vino.formatoResumen());
+                    vinosActualizadosOCreados.add(vino.formatoResumen());
                 }
                 em.getTransaction().commit();
             }
         } finally {
             em.close();
-            pantalla.mostarResumenBodegasActualizadasCreadas(resumenVinosActualizados);
+            pantalla.mostarResumenBodegasActualizadasCreadas(bodegaSeleccionada,vinosActualizadosOCreados);
         }
     }
 
@@ -122,5 +121,58 @@ public class GestorImportarActualizacion {
         bodega.crearVino(vino.getNombre(), vino.getImagenEtiqueta(), vino.getPrecioARS(), vino.getNotaCataBodega(), vino.getAniada(), varietal, maridajes);
     }
 
+    public void buscarEnofiloSuscriptosABodega(String bodegaSeleccionada) {
+        EntityManager em = emf.createEntityManager();
+        List<String> nombresEnofilosSuscriptos = new ArrayList<>();
 
+        try {
+            // 1. Buscar la bodega por nombre
+            TypedQuery<Bodega> bodegaQuery = em.createQuery(
+                    "SELECT b FROM Bodega b WHERE b.nombre = :nombre", Bodega.class);
+            bodegaQuery.setParameter("nombre", bodegaSeleccionada);
+            Bodega bodega = bodegaQuery.getSingleResult();
+
+            if (bodega != null) {
+                // 2. Buscar todos los registros de la tabla intermedia Siguiendo que tengan el mismo bodega_id
+                TypedQuery<Siguiendo> siguiendoQuery = em.createQuery(
+                        "SELECT s FROM Siguiendo s WHERE s.bodega.id = :bodegaId", Siguiendo.class);
+                siguiendoQuery.setParameter("bodegaId", bodega.getId());
+                List<Siguiendo> registrosSiguiendo = siguiendoQuery.getResultList();
+
+                // 3. Obtener los enofilo_id de esas suscripciones y luego buscar los Enofilos
+                for (Siguiendo siguiendo : registrosSiguiendo) {
+                    Long enofiloId = siguiendo.getEnofilo().getId(); // Asumimos que hay un getter para el Enofilo
+
+                    // Ahora obtenemos el nombre del enófilo utilizando su id
+                    Enofilo enofilo = em.find(Enofilo.class, enofiloId);
+                    if (enofilo != null) {
+                        String nombreUsuario = enofilo.obtenerNombreEnofiloSuscripto();
+                        nombresEnofilosSuscriptos.add(nombreUsuario);
+                    }
+                }
+            }
+        } catch (NoResultException e) {
+            System.out.println("No se encontró la bodega seleccionada: " + bodegaSeleccionada);
+        } finally {
+            em.close();
+        }
+
+        //return nombresEnofilosSuscriptos;
+    }
+
+
+    @Override
+    public void suscribir(IObservadorActualizacionDeBodega observador) {
+
+    }
+
+    @Override
+    public void quitar(IObservadorActualizacionDeBodega observador) {
+
+    }
+
+    @Override
+    public void notificarNovedades() {
+
+    }
 }

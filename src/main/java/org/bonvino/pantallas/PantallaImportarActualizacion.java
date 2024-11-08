@@ -4,6 +4,7 @@ import org.bonvino.gestores.GestorImportarActualizacion;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -146,8 +147,65 @@ public class PantallaImportarActualizacion {
         }
     }
 
-    public void mostarResumenBodegasActualizadasCreadas(List<String> resumenVinosActualizados){
+    public void mostarResumenBodegasActualizadasCreadas(String bodegaSeleccionada,List<String> vinosActualizadosOCreados){
+        // Crear la ventana
+        JFrame frame = new JFrame("Resumen de Bodegas Actualizadas");
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setSize(1024, 576); // Tamaño más grande para acomodar más datos
+        frame.setLayout(new BorderLayout());
+        frame.setLocationRelativeTo(null);
 
+        // Panel para el nombre de la bodega
+        JPanel panelNombreBodega = new JPanel();
+        panelNombreBodega.setBackground(new Color(245, 245, 245));
+        panelNombreBodega.setBorder(new EmptyBorder(20, 20, 20, 20));
+        JLabel labelNombreBodega = new JLabel(bodegaSeleccionada, SwingConstants.CENTER);
+        labelNombreBodega.setFont(new Font("SansSerif", Font.BOLD, 20));
+        labelNombreBodega.setForeground(new Color(41, 128, 185));
+        panelNombreBodega.add(labelNombreBodega);
+        frame.add(panelNombreBodega, BorderLayout.NORTH);
+
+        // Panel para los datos de los vinos
+        JPanel panelDatosVinos = new JPanel();
+        panelDatosVinos.setLayout(new BoxLayout(panelDatosVinos, BoxLayout.Y_AXIS));
+        panelDatosVinos.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(new Color(41, 128, 185)),
+                "Datos de los Vinos Actualizados/Creados",
+                TitledBorder.LEFT,
+                TitledBorder.TOP,
+                new Font("SansSerif", Font.BOLD, 16),
+                new Color(41, 128, 185)));
+        panelDatosVinos.setBackground(new Color(255, 255, 255)); // Fondo blanco
+        if (vinosActualizadosOCreados.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No se encontraron vinos actualizados o creados para la bodega seleccionada.");
+        }
+
+        // Estilo para los datos de los vinos
+        for (String vinoInfo : vinosActualizadosOCreados) {
+            JPanel vinoPanel = new JPanel();
+            vinoPanel.setLayout(new BorderLayout());
+            vinoPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+            vinoPanel.setBackground(new Color(250, 250, 250)); // Fondo más claro
+            vinoPanel.setBorder(BorderFactory.createLineBorder(new Color(220, 220, 220)));
+
+            JLabel textArea = new JLabel(vinoInfo); // Ahora `vinoInfo` es un String
+            textArea.setFont(new Font("SansSerif", Font.PLAIN, 14));
+            textArea.setForeground(new Color(34, 34, 34)); // Color del texto
+            textArea.setOpaque(true);
+            textArea.setBackground(new Color(250, 250, 250)); // Fondo más claro
+
+            vinoPanel.add(textArea, BorderLayout.CENTER);
+            panelDatosVinos.add(vinoPanel);
+            panelDatosVinos.add(Box.createRigidArea(new Dimension(0, 10))); // Espacio entre paneles
+        }
+        // Agregar el panel de datos de los vinos a un JScrollPane para scroll
+        JScrollPane scrollPaneVinos = new JScrollPane(panelDatosVinos);
+        scrollPaneVinos.setBorder(BorderFactory.createEmptyBorder());
+        frame.add(scrollPaneVinos, BorderLayout.CENTER);
+
+        // Mostrar la ventana
+        frame.setVisible(true);
+
+        gestor.buscarEnofiloSuscriptosABodega(bodegaSeleccionada);
     }
 
 
