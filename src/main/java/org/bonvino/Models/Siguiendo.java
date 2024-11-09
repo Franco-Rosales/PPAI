@@ -12,9 +12,11 @@ public class Siguiendo {
     private Long id;
 
     @Temporal(TemporalType.DATE)
+    @Column(name = "fecha_inicio")
     private Date fechaInicio;
 
     @Temporal(TemporalType.DATE)
+    @Column(name = "fecha_fin")
     private Date fechaFin;
 
     @ManyToOne

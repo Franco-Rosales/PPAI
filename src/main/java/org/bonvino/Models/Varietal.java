@@ -22,8 +22,7 @@ public class Varietal {
     private int porcentajeComposicion;
 
     // Relación ManyToOne con Vino (cada varietal puede pertenecer a múltiples vinos, pero cada vino tiene un único varietal)
-    @ManyToOne
-    @JoinColumn(name = "vino_id")
+    @OneToOne(mappedBy = "varietal")
     private Vino vino;
 
     // Relación ManyToMany con TipoUva (cada varietal puede tener múltiples tipos de uvas y viceversa)

@@ -34,7 +34,7 @@ public class Vino {
     private Bodega bodega;
 
     // Relación ManyToOne con Varietal (cada vino tiene un único varietal)
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "varietal_id")
     private Varietal varietal;
 

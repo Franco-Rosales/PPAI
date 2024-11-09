@@ -17,18 +17,18 @@ public class Bodega {
     @Column(name = "nombre")
     private String nombre;
 
-    @Column(name = "fechaUltimaActualizacion")
+    @Column(name = "fechaUltima_actualizacion")
     @Temporal(TemporalType.DATE)
     private Date fechaUltimaActualizacion;
 
-    @Column(name = "periodicidadActualizacion", nullable = false)
+    @Column(name = "periodicidad_actualizacion", nullable = false)
     private int periodicidadActualizacion;
 
     @Column(name = "descripcion")
     private String descripcion;
 
 
-    @Column(name = "coordenadasUbicacion")
+    @Column(name = "coordenadas_ubicacion")
     private String coordenadasUbicacion;
 
     @Column(name = "historia")

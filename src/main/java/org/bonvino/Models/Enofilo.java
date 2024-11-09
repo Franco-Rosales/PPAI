@@ -14,7 +14,7 @@ public class Enofilo {
     private String nombre;
     @Column(name = "apellido")
     private String apellido;
-    @Column(name = "imagenPerfil")
+    @Column(name = "imagen_perfil")
     private String imagenPerfil;
 
     @OneToOne
