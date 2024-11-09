@@ -1,6 +1,7 @@
 package org.bonvino.Models;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "enofilo")
@@ -24,18 +25,37 @@ public class Enofilo {
 
 
 
-    public String obtenerNombreEnofiloSuscripto(){
-        EntityManager em = emf.createEntityManager();
+    public String obtenerNombreEnofiloSuscripto(String bodegaSeleccionada){
+        if (this.estaSuscripto(bodegaSeleccionada)){
+            return this.buscarNomreUsuario();
+        }else {
+            return null;
+        }
+    }
 
+    public boolean estaSuscripto(String bodegaSeleccionada){
+        EntityManager em = emf.createEntityManager();
         try {
-            // Buscar el usuario asociado al enófilo y obtener el nombre
-            TypedQuery<String> usuarioQuery = em.createQuery(
-                    "SELECT u.nombre FROM Usuario u WHERE u.id = :usuarioId", String.class);
-            usuarioQuery.setParameter("usuarioId", this.usuario.getId());
-            return usuarioQuery.getSingleResult();
+            TypedQuery<Siguiendo> siguiendoQuery = em.createQuery(
+                    "SELECT s FROM Siguiendo s WHERE s.enofilo.id = :enofiloId", Siguiendo.class);
+            siguiendoQuery.setParameter("enofiloId", this.id);
+            List<Siguiendo> siguiendos = siguiendoQuery.getResultList();
+            if (siguiendos.size() > 0){
+                for (Siguiendo siguiendo : siguiendos) {
+                    if (siguiendo.sosDeBodega(bodegaSeleccionada)){
+                        return true;
+                    }
+                }
+            }
+            return false;
         } finally {
             em.close();
         }
+    }
+
+
+    public String buscarNomreUsuario(){
+        return this.usuario.getNombre();
     }
 
     // Getters y Setters

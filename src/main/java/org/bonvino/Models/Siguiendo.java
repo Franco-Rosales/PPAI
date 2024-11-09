@@ -27,6 +27,14 @@ public class Siguiendo {
 
     // Getters y Setters
 
+
+    public Siguiendo() {
+    }
+
+    public boolean sosDeBodega(String bodegaSeleccionada){
+        return this.bodega.getNombre().equals(bodegaSeleccionada);
+    }
+
     public Long getId() {
         return id;
     }

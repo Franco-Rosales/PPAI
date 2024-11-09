@@ -3,6 +3,7 @@ package org.bonvino.gestores;
 import org.bonvino.Models.*;
 import org.bonvino.interfaces.IObservadorActualizacionDeBodega;
 import org.bonvino.interfaces.ISujetoActualizacionDeBodega;
+import org.bonvino.pantallas.InterfazNotificacion;
 import org.bonvino.pantallas.PantallaImportarActualizacion;
 
 import javax.persistence.*;
@@ -14,16 +15,27 @@ import java.util.List;
 public class GestorImportarActualizacion  implements ISujetoActualizacionDeBodega {
     private EntityManagerFactory emf;
 
+    private String bodegaSeleccionada;
+
+    private List<String> vinosActualizadosOCreados = new ArrayList<>();
+
+    private Date fechaHoraActual;
+
+    private List<String> usuarioEnofilo = new ArrayList<>();
+    private List<IObservadorActualizacionDeBodega> observadores = new ArrayList<>();
+
 
     public GestorImportarActualizacion() {
         this.emf = Persistence.createEntityManagerFactory("wine_persistence_unit");
     }
 
     public void opcionActualizacionVinos(PantallaImportarActualizacion pantalla){
+        System.out.println("Opcion Actualizacion Vinos");
         this.buscarBodegasActualizacion(pantalla);
     }
 
     public void buscarBodegasActualizacion(PantallaImportarActualizacion pantalla){
+        System.out.println("Buscar Bodegas Actualizacion");
         EntityManager em = emf.createEntityManager();
         List<String> bodegasConActualizacion = new ArrayList<>();
         Date fechaActual = this.getFechaHoraActual();
@@ -34,7 +46,6 @@ public class GestorImportarActualizacion  implements ISujetoActualizacionDeBodeg
             List<Bodega> listaBodegas = query.getResultList();
             for (Bodega bodega : listaBodegas) {
                 if (bodega.tieneActualizacion(fechaActual)) {
-                    //Todo: cambiar en el diagrama de secuencia el getDatos por el getNombre
                     bodegasConActualizacion.add(bodega.getNombre());
                 }
             }
@@ -45,11 +56,13 @@ public class GestorImportarActualizacion  implements ISujetoActualizacionDeBodeg
     }
 
     private Date getFechaHoraActual() {
-        //Todo: elmine este atributo del gestor
-        return new Date(); // Devuelve la fecha actual
+        System.out.println("Get Fecha Hora Actual");
+        this.fechaHoraActual = new Date();
+        return fechaHoraActual; // Devuelve la fecha actual
     }
 
     public void tomarSeleccionBodega(String bodegaSeleccionada, PantallaImportarActualizacion pantalla) {
+        this.bodegaSeleccionada = bodegaSeleccionada;
         obtenerActualizacionesBodega(bodegaSeleccionada, pantalla);
     }
 
@@ -57,8 +70,7 @@ public class GestorImportarActualizacion  implements ISujetoActualizacionDeBodeg
         EntityManager em = emf.createEntityManager();
         ApiActualizaciones apiActualizaciones = new ApiActualizaciones();
         List<Vino> vinosActualizacion = apiActualizaciones.obtenerActualizaciones(bodegaSeleccionada);
-
-        List<String> vinosActualizadosOCreados = new ArrayList<>();
+        this.vinosActualizadosOCreados.clear();
 
         try {
             for (Vino vino : vinosActualizacion) {
@@ -88,7 +100,8 @@ public class GestorImportarActualizacion  implements ISujetoActualizacionDeBodeg
             }
         } finally {
             em.close();
-            pantalla.mostarResumenBodegasActualizadasCreadas(bodegaSeleccionada,vinosActualizadosOCreados);
+            pantalla.mostrarResumenActualizacionesBodega(bodegaSeleccionada,vinosActualizadosOCreados);
+            buscarEnofiloSuscriptosABodega(bodegaSeleccionada);
         }
     }
 
@@ -116,54 +129,45 @@ public class GestorImportarActualizacion  implements ISujetoActualizacionDeBodeg
     }
 
     public void crearVinos(Vino vino, Varietal varietal, List<Maridaje> maridajes){
-        // Todo: Sacar el segundo loop de creacion de vinos
         Bodega bodega = vino.getBodega();
         bodega.crearVino(vino.getNombre(), vino.getImagenEtiqueta(), vino.getPrecioARS(), vino.getNotaCataBodega(), vino.getAniada(), varietal, maridajes);
     }
 
-    public void buscarEnofiloSuscriptosABodega(String bodegaSeleccionada) {
+
+
+    public void buscarEnofiloSuscriptosABodega(String bodegaSeleccionada){
         EntityManager em = emf.createEntityManager();
-        List<String> nombresEnofilosSuscriptos = new ArrayList<>();
 
-        try {
-            // 1. Buscar la bodega por nombre
-            TypedQuery<Bodega> bodegaQuery = em.createQuery(
-                    "SELECT b FROM Bodega b WHERE b.nombre = :nombre", Bodega.class);
-            bodegaQuery.setParameter("nombre", bodegaSeleccionada);
-            Bodega bodega = bodegaQuery.getSingleResult();
 
-            if (bodega != null) {
-                // 2. Buscar todos los registros de la tabla intermedia Siguiendo que tengan el mismo bodega_id
-                TypedQuery<Siguiendo> siguiendoQuery = em.createQuery(
-                        "SELECT s FROM Siguiendo s WHERE s.bodega.id = :bodegaId", Siguiendo.class);
-                siguiendoQuery.setParameter("bodegaId", bodega.getId());
-                List<Siguiendo> registrosSiguiendo = siguiendoQuery.getResultList();
+        // buscar todos los enofilos de la base de datos
+        try{
+            TypedQuery<Enofilo> query = em.createQuery(
+                    "SELECT e FROM Enofilo e", Enofilo.class);
+            List<Enofilo> enofilos = query.getResultList();
 
-                // 3. Obtener los enofilo_id de esas suscripciones y luego buscar los Enofilos
-                for (Siguiendo siguiendo : registrosSiguiendo) {
-                    Long enofiloId = siguiendo.getEnofilo().getId(); // Asumimos que hay un getter para el Enofilo
+            // bucle por cada enofilo encontrado
 
-                    // Ahora obtenemos el nombre del enófilo utilizando su id
-                    Enofilo enofilo = em.find(Enofilo.class, enofiloId);
-                    if (enofilo != null) {
-                        String nombreUsuario = enofilo.obtenerNombreEnofiloSuscripto();
-                        nombresEnofilosSuscriptos.add(nombreUsuario);
-                    }
-                }
+            for(Enofilo enofilo: enofilos){
+                usuarioEnofilo.add(enofilo.obtenerNombreEnofiloSuscripto(bodegaSeleccionada));
             }
-        } catch (NoResultException e) {
-            System.out.println("No se encontró la bodega seleccionada: " + bodegaSeleccionada);
-        } finally {
+
+            //Aplicacion del patron
+            InterfazNotificacion interfazNotificacion = new InterfazNotificacion();
+            suscribir(interfazNotificacion);
+            notificarNovedades();
+
+        }catch (NoResultException e) {
+            System.out.println("No se encontraron enofilos: ");
+        }finally {
             em.close();
         }
 
-        //return nombresEnofilosSuscriptos;
     }
 
 
     @Override
     public void suscribir(IObservadorActualizacionDeBodega observador) {
-
+        observadores.add(observador);
     }
 
     @Override
@@ -173,6 +177,9 @@ public class GestorImportarActualizacion  implements ISujetoActualizacionDeBodeg
 
     @Override
     public void notificarNovedades() {
+        for(IObservadorActualizacionDeBodega observador: observadores){
+            observador.actualizarNovedades(bodegaSeleccionada, usuarioEnofilo, vinosActualizadosOCreados, fechaHoraActual);
+        }
 
     }
 }

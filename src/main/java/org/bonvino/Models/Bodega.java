@@ -46,6 +46,7 @@ public class Bodega {
     }
 
     public boolean tieneActualizacion(Date fechaActual){
+        System.out.println("Tiene actualizacion");
         Calendar cal = Calendar.getInstance();
         cal.setTime(fechaUltimaActualizacion);
         cal.add(Calendar.DAY_OF_YEAR, periodicidadActualizacion);
@@ -54,20 +55,9 @@ public class Bodega {
     }
 
     public void actualizarVinos(Vino vinoExistente, Vino vinoActualizado){
-        //Todo: revisar si es necesario el loop que esta en el diagrama de secuencia
-        // Actualizar todos los atributos del vino existente
-        vinoExistente.setNombre(vinoActualizado.getNombre());
         vinoExistente.setImagenEtiqueta(vinoActualizado.getImagenEtiqueta());
         vinoExistente.setPrecioARS(vinoActualizado.getPrecioARS());
         vinoExistente.setNotaCataBodega(vinoActualizado.getNotaCataBodega());
-        vinoExistente.setAniada(vinoActualizado.getAniada());
-
-        // Actualizar la relación con Varietal
-        vinoExistente.setVarietal(vinoActualizado.getVarietal());
-
-        // Limpiar la lista de maridajes existente y agregar los maridajes actualizados
-        vinoExistente.getMaridajes().clear();
-        vinoExistente.getMaridajes().addAll(vinoActualizado.getMaridajes());
     }
 
 

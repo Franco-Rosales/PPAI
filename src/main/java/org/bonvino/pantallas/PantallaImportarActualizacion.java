@@ -18,16 +18,19 @@ public class PantallaImportarActualizacion {
     private JList<String> listaBodegas;
 
     public PantallaImportarActualizacion() {
+        System.out.println("PantallaImportarActualizacion");
         GestorImportarActualizacion gestor = new GestorImportarActualizacion();
         this.setGestor(gestor);
     }
 
 
     public void tomarOpcionActualizacionVinos() {
+        System.out.println("tomarOpcionActualizacionVinos");
         this.habilitarPantalla();
     }
 
     public void habilitarPantalla() {
+        System.out.println("habilitarPantalla");
         JFrame nuevaVentana = new JFrame("Bodegas Actualizables");
         nuevaVentana.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         nuevaVentana.setSize(1024, 576);
@@ -91,6 +94,7 @@ public class PantallaImportarActualizacion {
     }
 
     public void mostrarBodegasActualizables(List<String> bodegasActualizables) {
+        System.out.println("mostrarBodegasActualizables");
 
         //Todo: Mostrar mensaje en la pantalla para que pueda selecccionar una sola bodega a la vez
 
@@ -138,16 +142,16 @@ public class PantallaImportarActualizacion {
     //}
 
     public void tomarSeleccionBodegaActualizar(){
+        System.out.println("tomarSeleccionBodegaActualizar");
         String bodegaSeleccionada = listaBodegas.getSelectedValue();
         if (bodegaSeleccionada != null) {
-            // Llamar al método del controlador con la bodega seleccionada
             gestor.tomarSeleccionBodega(bodegaSeleccionada, this);
         } else {
             JOptionPane.showMessageDialog(null, "Por favor, seleccione una bodega.");
         }
     }
 
-    public void mostarResumenBodegasActualizadasCreadas(String bodegaSeleccionada,List<String> vinosActualizadosOCreados){
+    public void mostrarResumenActualizacionesBodega(String bodegaSeleccionada,List<String> vinosActualizadosOCreados){
         // Crear la ventana
         JFrame frame = new JFrame("Resumen de Bodegas Actualizadas");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -205,7 +209,7 @@ public class PantallaImportarActualizacion {
         // Mostrar la ventana
         frame.setVisible(true);
 
-        gestor.buscarEnofiloSuscriptosABodega(bodegaSeleccionada);
+
     }
 
 
