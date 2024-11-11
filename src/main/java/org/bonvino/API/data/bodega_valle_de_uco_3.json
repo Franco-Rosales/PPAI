@@ -1,0 +1,57 @@
+[
+  {
+    "id": 6,
+    "nombre": "Pinot Noir Reserva",
+    "imagenEtiqueta": "imagen_pinot_noir.jpg",
+    "precioARS": 2000.0,
+    "notaCataBodega": 4.9,
+    "aniada": 2021,
+    "bodega": {
+      "id": 1,
+      "nombre": "Bodega Valle de Uco"
+    },
+    "varietal": {
+      "id": 6,
+      "nombre": "Pinot Noir",
+      "descripcion": "Vino elegante y complejo",
+      "porcentajeComposicion": 100
+    },
+    "maridajes": [
+      {
+        "id": 10,
+        "nombre": "Pato",
+        "descripcion": "Excelente para platos de pato"
+      },
+      {
+        "id": 11,
+        "nombre": "Setas",
+        "descripcion": "Combina bien con setas y hongos"
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "nombre": "Merlot Joven",
+    "imagenEtiqueta": "imagen_merlot.jpg",
+    "precioARS": 950.0,
+    "notaCataBodega": 4.2,
+    "aniada": 2022,
+    "bodega": {
+      "id": 1,
+      "nombre": "Bodega Valle de Uco"
+    },
+    "varietal": {
+      "id": 7,
+      "nombre": "Merlot",
+      "descripcion": "Suave y afrutado",
+      "porcentajeComposicion": 100
+    },
+    "maridajes": [
+      {
+        "id": 12,
+        "nombre": "Pollo a la parrilla",
+        "descripcion": "Ideal con pollo a la parrilla"
+      }
+    ]
+  }
+]

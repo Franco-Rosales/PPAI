@@ -1,0 +1,57 @@
+[
+  {
+    "id": 15,
+    "nombre": "Malbec Premium",
+    "imagenEtiqueta": "imagen_malbec_premium.jpg",
+    "precioARS": 2500.0,
+    "notaCataBodega": 4.9,
+    "aniada": 2020,
+    "bodega": {
+      "id": 3,
+      "nombre": "Bodega Mendoza Sur"
+    },
+    "varietal": {
+      "id": 1,
+      "nombre": "Malbec",
+      "descripcion": "Intenso y afrutado",
+      "porcentajeComposicion": 100
+    },
+    "maridajes": [
+      {
+        "id": 25,
+        "nombre": "Asado",
+        "descripcion": "Perfecto para acompañar un asado"
+      }
+    ]
+  },
+  {
+    "id": 16,
+    "nombre": "Tempranillo Reserva",
+    "imagenEtiqueta": "imagen_tempranillo_reserva.jpg",
+    "precioARS": 1800.0,
+    "notaCataBodega": 4.5,
+    "aniada": 2019,
+    "bodega": {
+      "id": 3,
+      "nombre": "Bodega Mendoza Sur"
+    },
+    "varietal": {
+      "id": 4,
+      "nombre": "Tempranillo",
+      "descripcion": "Aromático y estructurado",
+      "porcentajeComposicion": 100
+    },
+    "maridajes": [
+      {
+        "id": 26,
+        "nombre": "Paella",
+        "descripcion": "Ideal para acompañar una paella"
+      },
+      {
+        "id": 27,
+        "nombre": "Quesos duros",
+        "descripcion": "Combina bien con quesos duros"
+      }
+    ]
+  }
+]

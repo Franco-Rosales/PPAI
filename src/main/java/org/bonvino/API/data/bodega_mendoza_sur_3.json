@@ -1,0 +1,62 @@
+[
+  {
+    "id": 19,
+    "nombre": "Malbec Gran Reserva",
+    "imagenEtiqueta": "imagen_malbec_gran_reserva.jpg",
+    "precioARS": 2900.0,
+    "notaCataBodega": 4.8,
+    "aniada": 2018,
+    "bodega": {
+      "id": 3,
+      "nombre": "Bodega Mendoza Sur"
+    },
+    "varietal": {
+      "id": 1,
+      "nombre": "Malbec",
+      "descripcion": "Complejo y de gran cuerpo",
+      "porcentajeComposicion": 100
+    },
+    "maridajes": [
+      {
+        "id": 31,
+        "nombre": "Cordero",
+        "descripcion": "Perfecto para platos de cordero"
+      },
+      {
+        "id": 32,
+        "nombre": "Pasta con salsa roja",
+        "descripcion": "Ideal para acompañar pasta con salsa roja"
+      }
+    ]
+  },
+  {
+    "id": 20,
+    "nombre": "Chardonnay Reserva",
+    "imagenEtiqueta": "imagen_chardonnay_reserva.jpg",
+    "precioARS": 1700.0,
+    "notaCataBodega": 4.4,
+    "aniada": 2021,
+    "bodega": {
+      "id": 3,
+      "nombre": "Bodega Mendoza Sur"
+    },
+    "varietal": {
+      "id": 6,
+      "nombre": "Chardonnay",
+      "descripcion": "Fresco y con notas cítricas",
+      "porcentajeComposicion": 100
+    },
+    "maridajes": [
+      {
+        "id": 33,
+        "nombre": "Mariscos",
+        "descripcion": "Ideal para mariscos y pescados"
+      },
+      {
+        "id": 34,
+        "nombre": "Ensaladas frescas",
+        "descripcion": "Combina bien con ensaladas frescas"
+      }
+    ]
+  }
+]

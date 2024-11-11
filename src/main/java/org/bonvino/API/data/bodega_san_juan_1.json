@@ -1,0 +1,87 @@
+[
+  {
+    "id": 8,
+    "nombre": "Syrah Gran Reserva",
+    "imagenEtiqueta": "imagen_syrah_gran_reserva.jpg",
+    "precioARS": 2200.0,
+    "notaCataBodega": 4.8,
+    "aniada": 2018,
+    "bodega": {
+      "id": 2,
+      "nombre": "Bodega San Juan"
+    },
+    "varietal": {
+      "id": 8,
+      "nombre": "Syrah",
+      "descripcion": "Cuerpo completo y especiado",
+      "porcentajeComposicion": 100
+    },
+    "maridajes": [
+      {
+        "id": 13,
+        "nombre": "Cordero",
+        "descripcion": "Ideal para platos de cordero"
+      },
+      {
+        "id": 14,
+        "nombre": "Estofado de carne",
+        "descripcion": "Perfecto con estofados"
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "nombre": "Bonarda Clásico",
+    "imagenEtiqueta": "imagen_bonarda.jpg",
+    "precioARS": 1150.0,
+    "notaCataBodega": 4.3,
+    "aniada": 2020,
+    "bodega": {
+      "id": 2,
+      "nombre": "Bodega San Juan"
+    },
+    "varietal": {
+      "id": 9,
+      "nombre": "Bonarda",
+      "descripcion": "Fresco y afrutado",
+      "porcentajeComposicion": 100
+    },
+    "maridajes": [
+      {
+        "id": 15,
+        "nombre": "Pizzas gourmet",
+        "descripcion": "Excelente para acompañar pizzas gourmet"
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "nombre": "Cabernet Franc Reserva",
+    "imagenEtiqueta": "imagen_cabernet_franc.jpg",
+    "precioARS": 1800.0,
+    "notaCataBodega": 4.6,
+    "aniada": 2019,
+    "bodega": {
+      "id": 2,
+      "nombre": "Bodega San Juan"
+    },
+    "varietal": {
+      "id": 10,
+      "nombre": "Cabernet Franc",
+      "descripcion": "Notas herbales y minerales",
+      "porcentajeComposicion": 100
+    },
+    "maridajes": [
+      {
+        "id": 16,
+        "nombre": "Quesos maduros",
+        "descripcion": "Ideal para quesos maduros y fuertes"
+      },
+      {
+        "id": 17,
+        "nombre": "Pasta con crema",
+        "descripcion": "Buen acompañante para pastas con crema"
+      }
+    ]
+  }
+]

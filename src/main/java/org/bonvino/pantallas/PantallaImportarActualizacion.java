@@ -151,7 +151,9 @@ public class PantallaImportarActualizacion {
         }
     }
 
-    public void mostrarResumenActualizacionesBodega(String bodegaSeleccionada,List<String> vinosActualizadosOCreados){
+    public void mostrarResumenActualizacionesBodega(String bodegaSeleccionada, List<String> vinosActualizadosOCreados) {
+        System.out.println("mostrarResumenActualizacionesBodega");
+
         // Crear la ventana
         JFrame frame = new JFrame("Resumen de Bodegas Actualizadas");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -172,35 +174,76 @@ public class PantallaImportarActualizacion {
         // Panel para los datos de los vinos
         JPanel panelDatosVinos = new JPanel();
         panelDatosVinos.setLayout(new BoxLayout(panelDatosVinos, BoxLayout.Y_AXIS));
-        panelDatosVinos.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(new Color(41, 128, 185)),
+        panelDatosVinos.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createLineBorder(new Color(41, 128, 185)),
                 "Datos de los Vinos Actualizados/Creados",
                 TitledBorder.LEFT,
                 TitledBorder.TOP,
                 new Font("SansSerif", Font.BOLD, 16),
                 new Color(41, 128, 185)));
         panelDatosVinos.setBackground(new Color(255, 255, 255)); // Fondo blanco
+
         if (vinosActualizadosOCreados.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "No se encontraron vinos actualizados o creados para la bodega seleccionada.");
+            // Mostrar un mensaje que indica que no se encontraron vinos
+            JOptionPane.showMessageDialog(null, "No se encontraron vinos actualizados o creados para la bodega seleccionada.",
+                    "Sin vinos encontrados", JOptionPane.INFORMATION_MESSAGE);
+
+            // Mostrar un cuadro de mensaje con un solo botón "Salir" que cierra el programa
+            JOptionPane.showMessageDialog(null, "Programa cerrado.", "Salir", JOptionPane.INFORMATION_MESSAGE);
+            System.exit(0); // Cierra el programa
         }
 
         // Estilo para los datos de los vinos
         for (String vinoInfo : vinosActualizadosOCreados) {
             JPanel vinoPanel = new JPanel();
-            vinoPanel.setLayout(new BorderLayout());
+            vinoPanel.setLayout(new BoxLayout(vinoPanel, BoxLayout.Y_AXIS)); // Usa BoxLayout en Y para apilar elementos
             vinoPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
             vinoPanel.setBackground(new Color(250, 250, 250)); // Fondo más claro
             vinoPanel.setBorder(BorderFactory.createLineBorder(new Color(220, 220, 220)));
 
-            JLabel textArea = new JLabel(vinoInfo); // Ahora `vinoInfo` es un String
+            // Título del vino
+            JLabel titleLabel = new JLabel("Vino Actualizado / Creado:"); // Título para cada vino
+            titleLabel.setFont(new Font("SansSerif", Font.BOLD, 16));
+            titleLabel.setForeground(new Color(41, 128, 185));
+            titleLabel.setBorder(new EmptyBorder(10, 0, 10, 0));
+            vinoPanel.add(titleLabel);
+
+            // Procesar la información de cada vino para mostrarla como lista
+            // Eliminar las comas para todos los campos excepto "Maridaje"
+            String formattedVinoInfo = vinoInfo.replace(", ", "<br> * "); // Reemplazar comas por salto de línea con asterisco
+
+            // Para Maridaje, debemos asegurarnos de que las comas se mantengan y no haya asteriscos
+            if (formattedVinoInfo.contains("Maridajes:")) {
+                // Procesamos Maridaje para mantener las comas en una sola línea y eliminar los asteriscos
+                String[] parts = formattedVinoInfo.split("Maridajes:");
+                String maridajes = parts[1].replace("<br>", ", ");  // Reemplazar saltos de línea con coma y espacio
+                formattedVinoInfo = parts[0] + "Maridajes:" + maridajes;  // Reintegrar Maridaje con comas intactas
+            }
+
+            // Preparar la información en formato HTML para mostrar como lista
+            formattedVinoInfo = "<html>* " + formattedVinoInfo.replace("\n", "<br>* ") + "</html>"; // Formato de lista con asteriscos
+
+            // Eliminar los asteriscos de Maridaje
+            formattedVinoInfo = formattedVinoInfo.replace("Maridajes:", "Maridajes:").replace("*", "");
+
+            // Crear un JLabel con el texto formateado
+            JLabel textArea = new JLabel(formattedVinoInfo);
             textArea.setFont(new Font("SansSerif", Font.PLAIN, 14));
             textArea.setForeground(new Color(34, 34, 34)); // Color del texto
-            textArea.setOpaque(true);
+
             textArea.setBackground(new Color(250, 250, 250)); // Fondo más claro
 
-            vinoPanel.add(textArea, BorderLayout.CENTER);
+            vinoPanel.add(textArea);
+
+            // Añadir un espacio entre los vinos
+            vinoPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+
+            // Agregar el panel del vino al panel principal
             panelDatosVinos.add(vinoPanel);
-            panelDatosVinos.add(Box.createRigidArea(new Dimension(0, 10))); // Espacio entre paneles
+            panelDatosVinos.add(Box.createRigidArea(new Dimension(0, 20))); // Espacio entre vinos
         }
+
+
         // Agregar el panel de datos de los vinos a un JScrollPane para scroll
         JScrollPane scrollPaneVinos = new JScrollPane(panelDatosVinos);
         scrollPaneVinos.setBorder(BorderFactory.createEmptyBorder());
@@ -208,9 +251,8 @@ public class PantallaImportarActualizacion {
 
         // Mostrar la ventana
         frame.setVisible(true);
-
-
     }
+
 
 
 }

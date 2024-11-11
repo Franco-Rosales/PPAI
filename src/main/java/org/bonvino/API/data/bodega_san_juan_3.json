@@ -1,0 +1,62 @@
+[
+  {
+    "id": 13,
+    "nombre": "Sauvignon Blanc Selección",
+    "imagenEtiqueta": "imagen_sauvignon_blanc.jpg",
+    "precioARS": 1250.0,
+    "notaCataBodega": 4.3,
+    "aniada": 2021,
+    "bodega": {
+      "id": 2,
+      "nombre": "Bodega San Juan"
+    },
+    "varietal": {
+      "id": 3,
+      "nombre": "Sauvignon Blanc",
+      "descripcion": "Aromas cítricos y frescos",
+      "porcentajeComposicion": 100
+    },
+    "maridajes": [
+      {
+        "id": 21,
+        "nombre": "Pescado",
+        "descripcion": "Ideal para pescados y mariscos"
+      },
+      {
+        "id": 22,
+        "nombre": "Quesos suaves",
+        "descripcion": "Combina bien con quesos suaves y frescos"
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "nombre": "Cabernet Sauvignon Reserva",
+    "imagenEtiqueta": "imagen_cabernet_sauvignon.jpg",
+    "precioARS": 1950.0,
+    "notaCataBodega": 4.7,
+    "aniada": 2019,
+    "bodega": {
+      "id": 2,
+      "nombre": "Bodega San Juan"
+    },
+    "varietal": {
+      "id": 2,
+      "nombre": "Cabernet Sauvignon",
+      "descripcion": "Complejo y estructurado",
+      "porcentajeComposicion": 100
+    },
+    "maridajes": [
+      {
+        "id": 23,
+        "nombre": "Carne roja",
+        "descripcion": "Perfecto para cortes de carne roja"
+      },
+      {
+        "id": 24,
+        "nombre": "Quesos fuertes",
+        "descripcion": "Ideal para quesos fuertes y maduros"
+      }
+    ]
+  }
+]

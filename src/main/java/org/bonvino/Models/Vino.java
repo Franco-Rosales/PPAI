@@ -48,6 +48,9 @@ public class Vino {
     private List<Maridaje> maridajes = new ArrayList<>();
 
 // Constructor
+    public Vino() {
+    }
+
     public Vino(String nombre, String imagenEtiqueta, double precioARS, double notaCataBodega, int aniada, Bodega bodega, Varietal varietal, List<Maridaje> maridajes) {
         this.nombre = nombre;
         this.imagenEtiqueta = imagenEtiqueta;

@@ -1,0 +1,57 @@
+[
+  {
+    "id": 17,
+    "nombre": "Syrah Joven",
+    "imagenEtiqueta": "imagen_syrah_joven.jpg",
+    "precioARS": 1350.0,
+    "notaCataBodega": 4.2,
+    "aniada": 2021,
+    "bodega": {
+      "id": 3,
+      "nombre": "Bodega Mendoza Sur"
+    },
+    "varietal": {
+      "id": 8,
+      "nombre": "Syrah",
+      "descripcion": "Ligero y con notas especiadas",
+      "porcentajeComposicion": 100
+    },
+    "maridajes": [
+      {
+        "id": 28,
+        "nombre": "Embutidos",
+        "descripcion": "Ideal para acompañar embutidos"
+      },
+      {
+        "id": 29,
+        "nombre": "Queso de cabra",
+        "descripcion": "Combina bien con queso de cabra"
+      }
+    ]
+  },
+  {
+    "id": 18,
+    "nombre": "Pinot Noir Clásico",
+    "imagenEtiqueta": "imagen_pinot_noir.jpg",
+    "precioARS": 2100.0,
+    "notaCataBodega": 4.6,
+    "aniada": 2020,
+    "bodega": {
+      "id": 3,
+      "nombre": "Bodega Mendoza Sur"
+    },
+    "varietal": {
+      "id": 5,
+      "nombre": "Pinot Noir",
+      "descripcion": "Elegante y afrutado",
+      "porcentajeComposicion": 100
+    },
+    "maridajes": [
+      {
+        "id": 30,
+        "nombre": "Sushi",
+        "descripcion": "Perfecto para sushi y platos asiáticos"
+      }
+    ]
+  }
+]

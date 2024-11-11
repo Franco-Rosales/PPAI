@@ -1,0 +1,87 @@
+[
+  {
+    "id": 1,
+    "nombre": "Malbec Reserva",
+    "imagenEtiqueta": "imagen_malbec.jpg",
+    "precioARS": 1500.0,
+    "notaCataBodega": 4.7,
+    "aniada": 2021,
+    "bodega": {
+      "id": 1,
+      "nombre": "Bodega Valle de Uco"
+    },
+    "varietal": {
+      "id": 1,
+      "nombre": "Malbec",
+      "descripcion": "Vino tinto intenso",
+      "porcentajeComposicion": 100
+    },
+    "maridajes": [
+      {
+        "id": 1,
+        "nombre": "Carne asada",
+        "descripcion": "Ideal para carnes rojas asadas"
+      },
+      {
+        "id": 2,
+        "nombre": "Quesos duros",
+        "descripcion": "Acompaña bien con quesos duros"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "nombre": "Cabernet Sauvignon Clásico",
+    "imagenEtiqueta": "imagen_cabernet.jpg",
+    "precioARS": 1250.0,
+    "notaCataBodega": 4.5,
+    "aniada": 2020,
+    "bodega": {
+      "id": 1,
+      "nombre": "Bodega Valle de Uco"
+    },
+    "varietal": {
+      "id": 2,
+      "nombre": "Cabernet Sauvignon",
+      "descripcion": "Aromas especiados y robustos",
+      "porcentajeComposicion": 100
+    },
+    "maridajes": [
+      {
+        "id": 3,
+        "nombre": "Pasta con salsa roja",
+        "descripcion": "Ideal para pastas con salsa de tomate"
+      },
+      {
+        "id": 4,
+        "nombre": "Tabla de embutidos",
+        "descripcion": "Perfecto para acompañar con embutidos"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "nombre": "Syrah Joven",
+    "imagenEtiqueta": "imagen_syrah.jpg",
+    "precioARS": 980.0,
+    "notaCataBodega": 4.3,
+    "aniada": 2022,
+    "bodega": {
+      "id": 1,
+      "nombre": "Bodega Valle de Uco"
+    },
+    "varietal": {
+      "id": 3,
+      "nombre": "Syrah",
+      "descripcion": "Frutal y suave",
+      "porcentajeComposicion": 100
+    },
+    "maridajes": [
+      {
+        "id": 5,
+        "nombre": "Pizza",
+        "descripcion": "Acompaña muy bien a la pizza"
+      }
+    ]
+  }
+]

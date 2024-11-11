@@ -43,15 +43,39 @@ public class Varietal {
 
     public Varietal esVarietalActualizacion() {
         EntityManager em = emf.createEntityManager();
+        Varietal varietal = null; // Variable para el varietal encontrado o creado
         try {
+            // Buscar el varietal por nombre
             TypedQuery<Varietal> query = em.createQuery(
                     "SELECT v FROM Varietal v WHERE v.nombre = :nombre", Varietal.class);
             query.setParameter("nombre", this.nombre);
-            return query.getResultStream().findFirst().orElse(null);
+
+            varietal = query.getResultStream().findFirst().orElse(null);
+
+            if (varietal == null) {
+                // Si no se encuentra el varietal, lo creamos
+                varietal = new Varietal();
+                varietal.setNombre(this.nombre); // Asignamos el nombre
+                varietal.setDescripcion(this.descripcion); // Asignamos la descripción
+                varietal.setPorcentajeComposicion(this.porcentajeComposicion); // Asignamos el porcentaje de composición
+
+                em.getTransaction().begin();
+                em.persist(varietal); // Persistimos el nuevo varietal
+                em.getTransaction().commit(); // Confirmamos la transacción
+            }
+
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback(); // En caso de error, revertimos la transacción
+            }
+            e.printStackTrace();
         } finally {
-            em.close();
+            em.close(); // Cerramos el EntityManager
         }
+
+        return varietal; // Retornamos el varietal encontrado o recién creado
     }
+
 
 
     // Getters y Setters

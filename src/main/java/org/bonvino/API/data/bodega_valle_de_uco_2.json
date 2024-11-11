@@ -1,0 +1,62 @@
+[
+  {
+    "id": 4,
+    "nombre": "Chardonnay Premium",
+    "imagenEtiqueta": "imagen_chardonnay.jpg",
+    "precioARS": 1600.0,
+    "notaCataBodega": 4.8,
+    "aniada": 2019,
+    "bodega": {
+      "id": 1,
+      "nombre": "Bodega Valle de Uco"
+    },
+    "varietal": {
+      "id": 4,
+      "nombre": "Chardonnay",
+      "descripcion": "Blanco de notas cítricas",
+      "porcentajeComposicion": 100
+    },
+    "maridajes": [
+      {
+        "id": 6,
+        "nombre": "Mariscos",
+        "descripcion": "Ideal para mariscos frescos"
+      },
+      {
+        "id": 7,
+        "nombre": "Ensaladas",
+        "descripcion": "Perfecto con ensaladas frescas"
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "nombre": "Torrontés Selección",
+    "imagenEtiqueta": "imagen_torrontes.jpg",
+    "precioARS": 1100.0,
+    "notaCataBodega": 4.4,
+    "aniada": 2020,
+    "bodega": {
+      "id": 1,
+      "nombre": "Bodega Valle de Uco"
+    },
+    "varietal": {
+      "id": 5,
+      "nombre": "Torrontés",
+      "descripcion": "Blanco floral y fresco",
+      "porcentajeComposicion": 100
+    },
+    "maridajes": [
+      {
+        "id": 8,
+        "nombre": "Comida asiática",
+        "descripcion": "Acompaña bien platos de comida asiática"
+      },
+      {
+        "id": 9,
+        "nombre": "Quesos suaves",
+        "descripcion": "Ideal para quesos suaves"
+      }
+    ]
+  }
+]

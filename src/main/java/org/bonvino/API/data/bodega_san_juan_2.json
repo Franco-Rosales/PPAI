@@ -1,0 +1,57 @@
+[
+  {
+    "id": 11,
+    "nombre": "Malbec Roble",
+    "imagenEtiqueta": "imagen_malbec_roble.jpg",
+    "precioARS": 1300.0,
+    "notaCataBodega": 4.4,
+    "aniada": 2021,
+    "bodega": {
+      "id": 2,
+      "nombre": "Bodega San Juan"
+    },
+    "varietal": {
+      "id": 1,
+      "nombre": "Malbec",
+      "descripcion": "Intenso con notas de madera",
+      "porcentajeComposicion": 100
+    },
+    "maridajes": [
+      {
+        "id": 18,
+        "nombre": "Carne de cerdo",
+        "descripcion": "Perfecto para platos de cerdo asado"
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "nombre": "Merlot Reserva",
+    "imagenEtiqueta": "imagen_merlot_reserva.jpg",
+    "precioARS": 1400.0,
+    "notaCataBodega": 4.5,
+    "aniada": 2020,
+    "bodega": {
+      "id": 2,
+      "nombre": "Bodega San Juan"
+    },
+    "varietal": {
+      "id": 7,
+      "nombre": "Merlot",
+      "descripcion": "Suave y de taninos redondos",
+      "porcentajeComposicion": 100
+    },
+    "maridajes": [
+      {
+        "id": 19,
+        "nombre": "Pasta con carne",
+        "descripcion": "Buen acompañamiento para pastas con carne"
+      },
+      {
+        "id": 20,
+        "nombre": "Tabla de quesos",
+        "descripcion": "Excelente para una tabla de quesos variados"
+      }
+    ]
+  }
+]

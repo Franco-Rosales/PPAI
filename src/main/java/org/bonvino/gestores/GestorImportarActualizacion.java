@@ -62,11 +62,13 @@ public class GestorImportarActualizacion  implements ISujetoActualizacionDeBodeg
     }
 
     public void tomarSeleccionBodega(String bodegaSeleccionada, PantallaImportarActualizacion pantalla) {
+        System.out.println("Tomar Seleccion Bodega");
         this.bodegaSeleccionada = bodegaSeleccionada;
         obtenerActualizacionesBodega(bodegaSeleccionada, pantalla);
     }
 
     public void obtenerActualizacionesBodega(String bodegaSeleccionada, PantallaImportarActualizacion pantalla){
+        System.out.println("Obtener Actualizaciones Bodega");
         EntityManager em = emf.createEntityManager();
         ApiActualizaciones apiActualizaciones = new ApiActualizaciones();
         List<Vino> vinosActualizacion = apiActualizaciones.obtenerActualizaciones(bodegaSeleccionada);
@@ -106,16 +108,19 @@ public class GestorImportarActualizacion  implements ISujetoActualizacionDeBodeg
     }
 
     public void actualizarVinoExistente(Vino vinoExistente,Vino vinoActualizado){
+        System.out.println("Actualizar Vino Existente");
         Bodega bodega = vinoExistente.getBodega();
         bodega.actualizarVinos(vinoExistente, vinoActualizado);
     }
 
     public Varietal buscarVarietal (Vino vino){
+        System.out.println("Buscar Varietal");
         Varietal varietalActualizado = vino.getVarietal();
         return varietalActualizado != null ? varietalActualizado.esVarietalActualizacion() : null;
     }
 
     public List<Maridaje> buscarMaridaje(Vino vino){
+        System.out.println("Buscar Maridaje");
         List<Maridaje> maridajesActualizados = new ArrayList<>();
         List<Maridaje> maridajes = vino.getMaridajes();
         for(Maridaje maridaje : maridajes){
@@ -129,6 +134,7 @@ public class GestorImportarActualizacion  implements ISujetoActualizacionDeBodeg
     }
 
     public void crearVinos(Vino vino, Varietal varietal, List<Maridaje> maridajes){
+        System.out.println("Crear Vinos");
         Bodega bodega = vino.getBodega();
         bodega.crearVino(vino.getNombre(), vino.getImagenEtiqueta(), vino.getPrecioARS(), vino.getNotaCataBodega(), vino.getAniada(), varietal, maridajes);
     }
@@ -136,6 +142,7 @@ public class GestorImportarActualizacion  implements ISujetoActualizacionDeBodeg
 
 
     public void buscarEnofiloSuscriptosABodega(String bodegaSeleccionada){
+        System.out.println("Buscar Enofilo Suscriptos A Bodega");
         EntityManager em = emf.createEntityManager();
 
 
@@ -148,7 +155,10 @@ public class GestorImportarActualizacion  implements ISujetoActualizacionDeBodeg
             // bucle por cada enofilo encontrado
 
             for(Enofilo enofilo: enofilos){
-                usuarioEnofilo.add(enofilo.obtenerNombreEnofiloSuscripto(bodegaSeleccionada));
+                String nombreEnofilo = enofilo.obtenerNombreEnofiloSuscripto(bodegaSeleccionada);
+                if (nombreEnofilo != null){
+                    usuarioEnofilo.add(nombreEnofilo);
+                }
             }
 
             //Aplicacion del patron
@@ -167,6 +177,7 @@ public class GestorImportarActualizacion  implements ISujetoActualizacionDeBodeg
 
     @Override
     public void suscribir(IObservadorActualizacionDeBodega observador) {
+        System.out.println("Suscribir");
         observadores.add(observador);
     }
 
@@ -177,8 +188,9 @@ public class GestorImportarActualizacion  implements ISujetoActualizacionDeBodeg
 
     @Override
     public void notificarNovedades() {
+        System.out.println("Notificar Novedades");
         for(IObservadorActualizacionDeBodega observador: observadores){
-            observador.actualizarNovedades(bodegaSeleccionada, usuarioEnofilo, vinosActualizadosOCreados, fechaHoraActual);
+            observador.actualizarNovedades(bodegaSeleccionada, vinosActualizadosOCreados,usuarioEnofilo, fechaHoraActual);
         }
 
     }

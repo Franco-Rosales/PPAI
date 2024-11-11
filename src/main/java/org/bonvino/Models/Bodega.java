@@ -1,6 +1,7 @@
 package org.bonvino.Models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -36,7 +37,7 @@ public class Bodega {
 
     // Relación OneToMany con Vino
     @OneToMany(mappedBy = "bodega", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Vino> vinos;
+    private List<Vino> vinos = new ArrayList<>();
 
     private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("wine_persistence_unit");
 
@@ -55,6 +56,7 @@ public class Bodega {
     }
 
     public void actualizarVinos(Vino vinoExistente, Vino vinoActualizado){
+        System.out.println("Actualizar vinos");
         vinoExistente.setImagenEtiqueta(vinoActualizado.getImagenEtiqueta());
         vinoExistente.setPrecioARS(vinoActualizado.getPrecioARS());
         vinoExistente.setNotaCataBodega(vinoActualizado.getNotaCataBodega());
@@ -63,6 +65,7 @@ public class Bodega {
 
 
     public void crearVino(String nombre, String imagenEtiqueta, double precioARS, double notaCataBodega, int aniada, Varietal varietal, List<Maridaje> maridajes) {
+        System.out.println("Crear vino");
         EntityManager em = emf.createEntityManager();
 
         try {
@@ -80,6 +83,8 @@ public class Bodega {
             em.getTransaction().commit();
         } catch (Exception e) {
             if (em.getTransaction().isActive()) {
+                System.out.println("Error al crear el vino");
+                System.out.println(e.getMessage());
                 em.getTransaction().rollback();
             }
             throw e;

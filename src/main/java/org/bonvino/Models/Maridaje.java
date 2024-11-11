@@ -29,21 +29,42 @@ public class Maridaje {
 
 
     public Maridaje esMaridajeActualizacion() {
+        System.out.println("Es Maridaje Actualizacion");
         EntityManager em = emf.createEntityManager();
+        Maridaje maridaje = null; // Variable para el maridaje encontrado o creado
         try {
+            // Buscar el maridaje por nombre
             TypedQuery<Maridaje> query = em.createQuery(
                     "SELECT m FROM Maridaje m WHERE m.nombre = :nombre", Maridaje.class);
             query.setParameter("nombre", this.nombre);
-            // Obtener el primer maridaje encontrado, si existe
+
             List<Maridaje> resultados = query.getResultList();
+
             if (!resultados.isEmpty()) {
-                return resultados.get(0); // Retorna el primer maridaje encontrado
+                // Si el maridaje existe, lo retornamos
+                maridaje = resultados.get(0);
+            } else {
+                // Si no se encuentra el maridaje, lo creamos
+                maridaje = new Maridaje();
+                maridaje.setNombre(this.nombre); // Asignamos el nombre
+                maridaje.setDescripcion(this.descripcion); // Asignamos la descripción
+                em.getTransaction().begin();
+                em.persist(maridaje); // Persistimos el nuevo maridaje
+                em.getTransaction().commit(); // Confirmamos la transacción
             }
-            return null; // Retorna null si no se encuentra un maridaje
+
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback(); // En caso de error, revertimos la transacción
+            }
+            e.printStackTrace();
         } finally {
-            em.close();
+            em.close(); // Cerramos el EntityManager
         }
+
+        return maridaje; // Retornamos el maridaje encontrado o recién creado
     }
+
 
     // Getters y Setters
 

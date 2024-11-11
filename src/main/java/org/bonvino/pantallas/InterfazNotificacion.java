@@ -14,9 +14,14 @@ public class InterfazNotificacion implements IObservadorActualizacionDeBodega {
     }
 
     public void actualizarNovedades(String nombreBodega, List<String> vinos, List<String> usuarioEnofilo, Date fechaHoraActual) {
+        System.out.println("Actualizando novedades");
+        for (String usuario: usuarioEnofilo){
+            System.out.println("Usuario: " + usuario);
+        }
+
         // Crear y configurar la ventana de notificación
         JFrame frame = new JFrame("Notificación de Novedades");
-        frame.setSize(960, 540);
+        frame.setSize(600, 400);
         frame.setLocation(0, 0); // Esquina superior izquierda
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
@@ -56,10 +61,17 @@ public class InterfazNotificacion implements IObservadorActualizacionDeBodega {
         for (String vino : vinos) {
             JPanel vinoPanel = new JPanel(new BorderLayout());
             vinoPanel.setBorder(BorderFactory.createLineBorder(new Color(220, 220, 220), 1));
+            vinoPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
             vinoPanel.setBackground(new Color(250, 250, 250));
-            JLabel vinoLabel = new JLabel(vino);
+
+            // Aquí reemplazamos las comas por saltos de línea para mostrar los detalles
+            String formattedVino = vino.replace(",", "<br> - ").replace("\n", "<br>");
+            formattedVino = "<html> " + formattedVino + "</html>";
+
+            JLabel vinoLabel = new JLabel(formattedVino);
             vinoLabel.setFont(new Font("SansSerif", Font.PLAIN, 14));
             vinoLabel.setForeground(new Color(34, 34, 34));
+            vinoLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
             vinoPanel.add(vinoLabel, BorderLayout.CENTER);
             vinosPanel.add(vinoPanel);
             vinosPanel.add(Box.createRigidArea(new Dimension(0, 10))); // Espacio entre vinos
@@ -69,7 +81,7 @@ public class InterfazNotificacion implements IObservadorActualizacionDeBodega {
         vinosScrollPane.setPreferredSize(new Dimension(500, 200));
         vinosScrollPane.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createLineBorder(new Color(41, 128, 185)),
-                "Nuevos Vinos",
+                "Vinos Nuevos y Vinos Actualizados",
                 TitledBorder.LEFT, TitledBorder.TOP,
                 new Font("SansSerif", Font.BOLD, 16),
                 new Color(41, 128, 185)
@@ -89,5 +101,7 @@ public class InterfazNotificacion implements IObservadorActualizacionDeBodega {
         frame.add(panel);
         frame.setVisible(true);
     }
+
+
 
 }
