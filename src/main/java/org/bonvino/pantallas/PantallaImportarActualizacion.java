@@ -71,10 +71,18 @@ public class PantallaImportarActualizacion {
         tituloLabel.setHorizontalAlignment(SwingConstants.CENTER);
         panelPrincipal.add(tituloLabel, BorderLayout.NORTH);
 
+        // Añadir un mensaje de advertencia
+        JLabel advertenciaLabel = new JLabel("Adevertencia:  " +
+                "Seleccione solo una bodega a la vez!!");
+        advertenciaLabel.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        advertenciaLabel.setForeground(new Color(255, 0, 0)); // Color rojo para advertencia
+        advertenciaLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        panelPrincipal.add(advertenciaLabel, BorderLayout.CENTER);
+
         // Agregar la lista de bodegas dentro de un JScrollPane al panel principal
         JScrollPane scrollPane = new JScrollPane(listaBodegas);
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
-        panelPrincipal.add(scrollPane, BorderLayout.CENTER);
+        panelPrincipal.add(scrollPane, BorderLayout.SOUTH);
 
         // Añadir el panel principal a la ventana
         nuevaVentana.getContentPane().add(panelPrincipal);
