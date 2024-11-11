@@ -18,19 +18,15 @@ public class PantallaImportarActualizacion {
     private JList<String> listaBodegas;
 
     public PantallaImportarActualizacion() {
-        System.out.println("PantallaImportarActualizacion");
         GestorImportarActualizacion gestor = new GestorImportarActualizacion();
         this.setGestor(gestor);
     }
 
-
     public void tomarOpcionActualizacionVinos() {
-        System.out.println("tomarOpcionActualizacionVinos");
         this.habilitarPantalla();
     }
 
     public void habilitarPantalla() {
-        System.out.println("habilitarPantalla");
         JFrame nuevaVentana = new JFrame("Bodegas Actualizables");
         nuevaVentana.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         nuevaVentana.setSize(1024, 576);
@@ -94,14 +90,10 @@ public class PantallaImportarActualizacion {
     }
 
     public void mostrarBodegasActualizables(List<String> bodegasActualizables) {
-        System.out.println("mostrarBodegasActualizables");
-
-        //Todo: Mostrar mensaje en la pantalla para que pueda selecccionar una sola bodega a la vez
-
         // Convertir la lista a un array para el JList
+        listaBodegas.clearSelection();
         DefaultListModel<String> listModel = new DefaultListModel<>();
         for (String bodega : bodegasActualizables) {
-
             listModel.addElement(bodega);
         }
         listaBodegas.setModel(listModel);
@@ -122,7 +114,6 @@ public class PantallaImportarActualizacion {
         botonSeleccionar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //solicitarSeleccionBodegas();
                 tomarSeleccionBodegaActualizar();
             }
         });
@@ -137,12 +128,7 @@ public class PantallaImportarActualizacion {
         ventana.getContentPane().add(panelBoton, BorderLayout.SOUTH);
     }
 
-    //public void solicitarSeleccionBodegas(){
-        //tomarSeleccionBodegaActualizar();
-    //}
-
     public void tomarSeleccionBodegaActualizar(){
-        System.out.println("tomarSeleccionBodegaActualizar");
         String bodegaSeleccionada = listaBodegas.getSelectedValue();
         if (bodegaSeleccionada != null) {
             gestor.tomarSeleccionBodega(bodegaSeleccionada, this);
@@ -151,9 +137,7 @@ public class PantallaImportarActualizacion {
         }
     }
 
-    public void mostrarResumenActualizacionesBodega(String bodegaSeleccionada, List<String> vinosActualizadosOCreados) {
-        System.out.println("mostrarResumenActualizacionesBodega");
-
+    public boolean mostrarResumenActualizacionesBodega(String bodegaSeleccionada, List<String> vinosActualizadosOCreados) {
         // Crear la ventana
         JFrame frame = new JFrame("Resumen de Bodegas Actualizadas");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -184,13 +168,14 @@ public class PantallaImportarActualizacion {
         panelDatosVinos.setBackground(new Color(255, 255, 255)); // Fondo blanco
 
         if (vinosActualizadosOCreados.isEmpty()) {
-            // Mostrar un mensaje que indica que no se encontraron vinos
-            JOptionPane.showMessageDialog(null, "No se encontraron vinos actualizados o creados para la bodega seleccionada.",
+            // Mostrar mensaje de advertencia si no hay vinos
+            JOptionPane.showMessageDialog(frame,
+                    "No se encontraron vinos actualizados o creados para la bodega seleccionada.",
                     "Sin vinos encontrados", JOptionPane.INFORMATION_MESSAGE);
 
-            // Mostrar un cuadro de mensaje con un solo botón "Salir" que cierra el programa
-            JOptionPane.showMessageDialog(null, "Programa cerrado.", "Salir", JOptionPane.INFORMATION_MESSAGE);
-            System.exit(0); // Cierra el programa
+            // Cerrar la ventana actual y permitir volver a la selección
+            frame.dispose();
+            return false;
         }
 
         // Estilo para los datos de los vinos
@@ -251,6 +236,7 @@ public class PantallaImportarActualizacion {
 
         // Mostrar la ventana
         frame.setVisible(true);
+        return true;
     }
 
 

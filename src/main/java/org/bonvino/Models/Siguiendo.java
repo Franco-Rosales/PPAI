@@ -34,7 +34,6 @@ public class Siguiendo {
     }
 
     public boolean sosDeBodega(String bodegaSeleccionada){
-        System.out.println("Sos de bodega");
         return this.bodega.getNombre().equals(bodegaSeleccionada);
     }
 

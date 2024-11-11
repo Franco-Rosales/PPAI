@@ -30,12 +30,10 @@ public class GestorImportarActualizacion  implements ISujetoActualizacionDeBodeg
     }
 
     public void opcionActualizacionVinos(PantallaImportarActualizacion pantalla){
-        System.out.println("Opcion Actualizacion Vinos");
         this.buscarBodegasActualizacion(pantalla);
     }
 
     public void buscarBodegasActualizacion(PantallaImportarActualizacion pantalla){
-        System.out.println("Buscar Bodegas Actualizacion");
         EntityManager em = emf.createEntityManager();
         List<String> bodegasConActualizacion = new ArrayList<>();
         Date fechaActual = this.getFechaHoraActual();
@@ -56,19 +54,16 @@ public class GestorImportarActualizacion  implements ISujetoActualizacionDeBodeg
     }
 
     private Date getFechaHoraActual() {
-        System.out.println("Get Fecha Hora Actual");
         this.fechaHoraActual = new Date();
         return fechaHoraActual; // Devuelve la fecha actual
     }
 
     public void tomarSeleccionBodega(String bodegaSeleccionada, PantallaImportarActualizacion pantalla) {
-        System.out.println("Tomar Seleccion Bodega");
         this.bodegaSeleccionada = bodegaSeleccionada;
         obtenerActualizacionesBodega(bodegaSeleccionada, pantalla);
     }
 
     public void obtenerActualizacionesBodega(String bodegaSeleccionada, PantallaImportarActualizacion pantalla){
-        System.out.println("Obtener Actualizaciones Bodega");
         EntityManager em = emf.createEntityManager();
         ApiActualizaciones apiActualizaciones = new ApiActualizaciones();
         List<Vino> vinosActualizacion = apiActualizaciones.obtenerActualizaciones(bodegaSeleccionada);
@@ -102,7 +97,10 @@ public class GestorImportarActualizacion  implements ISujetoActualizacionDeBodeg
             }
         } finally {
             em.close();
-            pantalla.mostrarResumenActualizacionesBodega(bodegaSeleccionada,vinosActualizadosOCreados);
+            boolean continuar = pantalla.mostrarResumenActualizacionesBodega(bodegaSeleccionada, vinosActualizadosOCreados);
+            if (!continuar) {
+                return;
+            }
             buscarEnofiloSuscriptosABodega(bodegaSeleccionada);
         }
     }
@@ -142,7 +140,6 @@ public class GestorImportarActualizacion  implements ISujetoActualizacionDeBodeg
 
 
     public void buscarEnofiloSuscriptosABodega(String bodegaSeleccionada){
-        System.out.println("Buscar Enofilo Suscriptos A Bodega");
         EntityManager em = emf.createEntityManager();
 
 
@@ -177,7 +174,6 @@ public class GestorImportarActualizacion  implements ISujetoActualizacionDeBodeg
 
     @Override
     public void suscribir(IObservadorActualizacionDeBodega observador) {
-        System.out.println("Suscribir");
         observadores.add(observador);
     }
 
@@ -188,7 +184,6 @@ public class GestorImportarActualizacion  implements ISujetoActualizacionDeBodeg
 
     @Override
     public void notificarNovedades() {
-        System.out.println("Notificar Novedades");
         for(IObservadorActualizacionDeBodega observador: observadores){
             observador.actualizarNovedades(bodegaSeleccionada, vinosActualizadosOCreados,usuarioEnofilo, fechaHoraActual);
         }

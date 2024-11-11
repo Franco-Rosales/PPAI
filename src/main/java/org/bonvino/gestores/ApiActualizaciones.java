@@ -17,7 +17,6 @@ import java.util.List;
 public class ApiActualizaciones {
 
     public List<Vino> obtenerActualizaciones(String bodegaSeleccionada) {
-        System.out.println("Obteniendo actualizaciones de la bodega: " + bodegaSeleccionada);
         // Construir la URL con el parámetro bodega
         String direccion = "http://localhost:8000/vino/?bodega=";
         String encodedBodega = URLEncoder.encode(bodegaSeleccionada, StandardCharsets.UTF_8);
@@ -42,8 +41,10 @@ public class ApiActualizaciones {
         // Verificar si la respuesta fue exitosa (código 200)
         if (response.statusCode() == 200) {
             String respuestaConVinos = response.body();
-            System.out.println("Respuesta de la API: " + respuestaConVinos);
             return parsearRespuesta(respuestaConVinos);
+        } else if (response.statusCode() == 404){
+            // Si no se encontraron vinos, devolver una lista vacía
+            return List.of();
         } else {
             // Si no fue exitosa, lanzar una excepción con el código de estado
             throw new RuntimeException("Error en la respuesta de la API: " + response.statusCode());
@@ -51,14 +52,10 @@ public class ApiActualizaciones {
     }
 
     private List<Vino> parsearRespuesta(String respuestaConVinos) {
-        System.out.println("Parseando respuesta de la API");
         Gson gson = new Gson();
         try {
             // Convertir la respuesta en una lista de vinos (porque la API devuelve una lista)
             Type tipoListaVinos = new TypeToken<List<Vino>>() {}.getType();
-            System.out.println("-------------------------------------------");
-            System.out.println("Vinos parseados: " + respuestaConVinos);
-            System.out.println("Tipo de lista: " + tipoListaVinos);
             return gson.fromJson(respuestaConVinos, tipoListaVinos);
         } catch (Exception e) {
             e.printStackTrace();

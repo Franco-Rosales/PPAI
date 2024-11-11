@@ -47,7 +47,6 @@ public class Bodega {
     }
 
     public boolean tieneActualizacion(Date fechaActual){
-        System.out.println("Tiene actualizacion");
         Calendar cal = Calendar.getInstance();
         cal.setTime(fechaUltimaActualizacion);
         cal.add(Calendar.DAY_OF_YEAR, periodicidadActualizacion);

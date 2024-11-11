@@ -14,11 +14,6 @@ public class InterfazNotificacion implements IObservadorActualizacionDeBodega {
     }
 
     public void actualizarNovedades(String nombreBodega, List<String> vinos, List<String> usuarioEnofilo, Date fechaHoraActual) {
-        System.out.println("Actualizando novedades");
-        for (String usuario: usuarioEnofilo){
-            System.out.println("Usuario: " + usuario);
-        }
-
         // Crear y configurar la ventana de notificación
         JFrame frame = new JFrame("Notificación de Novedades");
         frame.setSize(600, 400);

@@ -26,7 +26,6 @@ public class Enofilo {
 
 
     public String obtenerNombreEnofiloSuscripto(String bodegaSeleccionada){
-        System.out.println("Obtener Nombre Enofilo Suscripto");
         if (this.estaSuscripto(bodegaSeleccionada)){
             return this.buscarNomreUsuario();
         }else {
@@ -35,7 +34,6 @@ public class Enofilo {
     }
 
     public boolean estaSuscripto(String bodegaSeleccionada){
-        System.out.println("Esta Suscripto");
         EntityManager em = emf.createEntityManager();
         try {
             TypedQuery<Siguiendo> siguiendoQuery = em.createQuery(
@@ -57,7 +55,6 @@ public class Enofilo {
 
 
     public String buscarNomreUsuario(){
-        System.out.println("Buscar Nombre Usuario");
         return this.usuario.getNombre();
     }
 
