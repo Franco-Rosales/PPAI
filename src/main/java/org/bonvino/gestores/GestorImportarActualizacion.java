@@ -7,7 +7,6 @@ import org.bonvino.pantallas.InterfazNotificacion;
 import org.bonvino.pantallas.PantallaImportarActualizacion;
 
 import javax.persistence.*;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -21,7 +20,7 @@ public class GestorImportarActualizacion  implements ISujetoActualizacionDeBodeg
 
     private Date fechaHoraActual;
 
-    private List<String> usuarioEnofilo = new ArrayList<>();
+    private List<String> usuariosEnofilos = new ArrayList<>();
     private List<IObservadorActualizacionDeBodega> observadores = new ArrayList<>();
 
 
@@ -90,7 +89,7 @@ public class GestorImportarActualizacion  implements ISujetoActualizacionDeBodeg
                     // Si el vino no existe, crea un nuevo registro
                     Varietal varietal = this.buscarVarietal(vino);
                     List<Maridaje> maridajes = this.buscarMaridaje(vino);
-                    this.crearVinos(vino, varietal, maridajes);
+                    this.crearVino(vino, varietal, maridajes);
                     vinosActualizadosOCreados.add(vino.formatoResumen());
                 }
                 em.getTransaction().commit();
@@ -101,14 +100,14 @@ public class GestorImportarActualizacion  implements ISujetoActualizacionDeBodeg
             if (!continuar) {
                 return;
             }
-            buscarEnofiloSuscriptosABodega(bodegaSeleccionada);
+            buscarEnofilosSuscriptosABodega(bodegaSeleccionada);
         }
     }
 
     public void actualizarVinoExistente(Vino vinoExistente,Vino vinoActualizado){
         System.out.println("Actualizar Vino Existente");
         Bodega bodega = vinoExistente.getBodega();
-        bodega.actualizarVinos(vinoExistente, vinoActualizado);
+        bodega.actualizarVino(vinoExistente, vinoActualizado);
     }
 
     public Varietal buscarVarietal (Vino vino){
@@ -131,7 +130,7 @@ public class GestorImportarActualizacion  implements ISujetoActualizacionDeBodeg
         return maridajesActualizados;
     }
 
-    public void crearVinos(Vino vino, Varietal varietal, List<Maridaje> maridajes){
+    public void crearVino(Vino vino, Varietal varietal, List<Maridaje> maridajes){
         System.out.println("Crear Vinos");
         Bodega bodega = vino.getBodega();
         bodega.crearVino(vino.getNombre(), vino.getImagenEtiqueta(), vino.getPrecioARS(), vino.getNotaCataBodega(), vino.getAniada(), varietal, maridajes);
@@ -139,7 +138,7 @@ public class GestorImportarActualizacion  implements ISujetoActualizacionDeBodeg
 
 
 
-    public void buscarEnofiloSuscriptosABodega(String bodegaSeleccionada){
+    public void buscarEnofilosSuscriptosABodega(String bodegaSeleccionada){
         EntityManager em = emf.createEntityManager();
 
 
@@ -154,13 +153,13 @@ public class GestorImportarActualizacion  implements ISujetoActualizacionDeBodeg
             for(Enofilo enofilo: enofilos){
                 String nombreEnofilo = enofilo.obtenerNombreEnofiloSuscripto(bodegaSeleccionada);
                 if (nombreEnofilo != null){
-                    usuarioEnofilo.add(nombreEnofilo);
+                    usuariosEnofilos.add(nombreEnofilo);
                 }
             }
 
             //Aplicacion del patron
-            InterfazNotificacion interfazNotificacion = new InterfazNotificacion();
-            suscribir(interfazNotificacion);
+            IObservadorActualizacionDeBodega observador = new InterfazNotificacion();
+            suscribir(observador);
             notificarNovedades();
 
         }catch (NoResultException e) {
@@ -185,7 +184,7 @@ public class GestorImportarActualizacion  implements ISujetoActualizacionDeBodeg
     @Override
     public void notificarNovedades() {
         for(IObservadorActualizacionDeBodega observador: observadores){
-            observador.actualizarNovedades(bodegaSeleccionada, vinosActualizadosOCreados,usuarioEnofilo, fechaHoraActual);
+            observador.actualizarNovedades(bodegaSeleccionada, vinosActualizadosOCreados, usuariosEnofilos, fechaHoraActual);
         }
 
     }

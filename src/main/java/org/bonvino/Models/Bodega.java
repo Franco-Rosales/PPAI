@@ -54,7 +54,7 @@ public class Bodega {
         return !fechaActual.before(fechaProximaActualizacion);
     }
 
-    public void actualizarVinos(Vino vinoExistente, Vino vinoActualizado){
+    public void actualizarVino(Vino vinoExistente, Vino vinoActualizado){
         System.out.println("Actualizar vinos");
         vinoExistente.setImagenEtiqueta(vinoActualizado.getImagenEtiqueta());
         vinoExistente.setPrecioARS(vinoActualizado.getPrecioARS());

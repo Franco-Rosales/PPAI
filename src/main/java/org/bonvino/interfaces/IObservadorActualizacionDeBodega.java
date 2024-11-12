@@ -5,5 +5,5 @@ import java.util.List;
 
 public interface IObservadorActualizacionDeBodega {
 
-    public void actualizarNovedades(String nombreBodega, List<String> vinos, List<String> usuarioEnofilo, Date fechaHoraActual);
+    public void actualizarNovedades(String bodegaSeleccionada, List<String> vinos, List<String> usuariosEnofilos, Date fechaHoraActual);
 }

@@ -13,7 +13,7 @@ public class InterfazNotificacion implements IObservadorActualizacionDeBodega {
     public InterfazNotificacion() {
     }
 
-    public void actualizarNovedades(String nombreBodega, List<String> vinos, List<String> usuarioEnofilo, Date fechaHoraActual) {
+    public void actualizarNovedades(String bodegaSeleccionada, List<String> vinos, List<String> usuariosEnofilos, Date fechaHoraActual) {
         // Crear y configurar la ventana de notificación
         JFrame frame = new JFrame("Notificación de Novedades");
         frame.setSize(600, 400);
@@ -27,14 +27,14 @@ public class InterfazNotificacion implements IObservadorActualizacionDeBodega {
         panel.setBackground(new Color(245, 245, 245));
 
         // Saludo personalizado
-        JLabel saludo = new JLabel("¡Hola, " + usuarioEnofilo.get(0) + "!");
+        JLabel saludo = new JLabel("¡Hola, " + usuariosEnofilos.get(0) + "!");
         saludo.setFont(new Font("SansSerif", Font.BOLD, 24));
         saludo.setForeground(new Color(41, 128, 185));
         saludo.setAlignmentX(Component.CENTER_ALIGNMENT);
         panel.add(saludo);
 
         // Mensaje de novedades de bodega
-        JLabel mensajeBodega = new JLabel("Hay nuevas Actualizaciones para la bodega " + nombreBodega);
+        JLabel mensajeBodega = new JLabel("Hay nuevas Actualizaciones para la bodega " + bodegaSeleccionada);
         mensajeBodega.setFont(new Font("SansSerif", Font.PLAIN, 18));
         mensajeBodega.setAlignmentX(Component.CENTER_ALIGNMENT);
         mensajeBodega.setForeground(new Color(34, 34, 34));
