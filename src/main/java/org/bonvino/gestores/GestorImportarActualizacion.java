@@ -34,7 +34,7 @@ public class GestorImportarActualizacion  implements ISujetoActualizacionDeBodeg
 
     public void buscarBodegasActualizacion(PantallaImportarActualizacion pantalla){
         EntityManager em = emf.createEntityManager();
-        List<String> bodegasConActualizacion = new ArrayList<>();
+        List<String> bodegasActualizables = new ArrayList<>();
         Date fechaActual = this.getFechaHoraActual();
         try{
             TypedQuery<Bodega> query = em.createQuery(
@@ -43,13 +43,13 @@ public class GestorImportarActualizacion  implements ISujetoActualizacionDeBodeg
             List<Bodega> listaBodegas = query.getResultList();
             for (Bodega bodega : listaBodegas) {
                 if (bodega.tieneActualizacion(fechaActual)) {
-                    bodegasConActualizacion.add(bodega.getNombre());
+                    bodegasActualizables.add(bodega.getNombre());
                 }
             }
         }finally {
             em.close();
         }
-        pantalla.mostrarBodegasActualizables(bodegasConActualizacion);
+        pantalla.mostrarBodegasActualizables(bodegasActualizables);
     }
 
     private Date getFechaHoraActual() {
