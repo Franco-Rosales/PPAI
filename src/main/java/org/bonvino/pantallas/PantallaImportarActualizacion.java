@@ -139,21 +139,46 @@ public class PantallaImportarActualizacion {
     public void tomarSeleccionBodegaActualizar(){
         String bodegaSeleccionada = listaBodegas.getSelectedValue();
         if (bodegaSeleccionada != null) {
+            JFrame ventanaActual = (JFrame) SwingUtilities.getWindowAncestor(listaBodegas);
+            ventanaActual.dispose();  // Cierra la ventana actual
             gestor.tomarSeleccionBodega(bodegaSeleccionada, this);
         } else {
             JOptionPane.showMessageDialog(null, "Por favor, seleccione una bodega.");
         }
     }
 
+
     public boolean mostrarResumenActualizacionesBodega(String bodegaSeleccionada, List<String> vinosActualizadosOCreados) {
-        // Crear la ventana
         JFrame frame = new JFrame("Resumen de Bodegas Actualizadas");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setSize(1024, 576); // Tamaño más grande para acomodar más datos
+        frame.setSize(1024, 576);
         frame.setLayout(new BorderLayout());
         frame.setLocationRelativeTo(null);
 
-        // Panel para el nombre de la bodega
+        // Panel para el botón de retroceso
+        JPanel panelRetroceso = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        panelRetroceso.setBackground(new Color(245, 245, 245));
+
+        JButton botonRetroceso = new JButton("⬅"); // Flecha de retroceso
+        botonRetroceso.setFont(new Font("SansSerif", Font.BOLD, 18));
+        botonRetroceso.setFocusPainted(false);
+        botonRetroceso.setForeground(Color.BLACK);
+        botonRetroceso.setBorder(BorderFactory.createEmptyBorder(5, 15, 5, 15));
+        botonRetroceso.setBackground(new Color(245, 245, 245));
+        botonRetroceso.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+        botonRetroceso.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose(); // Cierra la pantalla actual
+                habilitarPantalla(); // Vuelve a la pantalla anterior
+            }
+        });
+
+        panelRetroceso.add(botonRetroceso);
+        frame.add(panelRetroceso, BorderLayout.NORTH);
+
+        // Código restante de la pantalla
         JPanel panelNombreBodega = new JPanel();
         panelNombreBodega.setBackground(new Color(245, 245, 245));
         panelNombreBodega.setBorder(new EmptyBorder(20, 20, 20, 20));
@@ -161,9 +186,9 @@ public class PantallaImportarActualizacion {
         labelNombreBodega.setFont(new Font("SansSerif", Font.BOLD, 20));
         labelNombreBodega.setForeground(new Color(41, 128, 185));
         panelNombreBodega.add(labelNombreBodega);
-        frame.add(panelNombreBodega, BorderLayout.NORTH);
+        frame.add(panelNombreBodega, BorderLayout.CENTER);
 
-        // Panel para los datos de los vinos
+        // Código para mostrar el resumen de vinos actualizados
         JPanel panelDatosVinos = new JPanel();
         panelDatosVinos.setLayout(new BoxLayout(panelDatosVinos, BoxLayout.Y_AXIS));
         panelDatosVinos.setBorder(BorderFactory.createTitledBorder(
@@ -173,16 +198,16 @@ public class PantallaImportarActualizacion {
                 TitledBorder.TOP,
                 new Font("SansSerif", Font.BOLD, 16),
                 new Color(41, 128, 185)));
-        panelDatosVinos.setBackground(new Color(255, 255, 255)); // Fondo blanco
+        panelDatosVinos.setBackground(new Color(255, 255, 255));
+
 
         if (vinosActualizadosOCreados.isEmpty()) {
-            // Mostrar mensaje de advertencia si no hay vinos
             JOptionPane.showMessageDialog(frame,
                     "No se encontraron vinos actualizados o creados para la bodega seleccionada.",
                     "Sin vinos encontrados", JOptionPane.INFORMATION_MESSAGE);
 
-            // Cerrar la ventana actual y permitir volver a la selección
             frame.dispose();
+            new PantallaImportarActualizacion().habilitarPantalla(); // Regresa a la pantalla anterior
             return false;
         }
 
@@ -244,7 +269,7 @@ public class PantallaImportarActualizacion {
 
         // Mostrar la ventana
         frame.setVisible(true);
-        return true;
+        return !vinosActualizadosOCreados.isEmpty();
     }
 
 
