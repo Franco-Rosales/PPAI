@@ -22,23 +22,23 @@ public class ApiActualizaciones {
         String encodedBodega = URLEncoder.encode(bodegaSeleccionada, StandardCharsets.UTF_8);
         String url = direccion + encodedBodega;
 
-        // Crear un cliente HTTP
+        // Crea un cliente HTTP
         HttpClient client = HttpClient.newHttpClient();
 
-        // Construir la solicitud GET
+        // Construye la solicitud GET
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
                 .build();
         HttpResponse<String> response = null;
 
         try {
-            // Enviar la solicitud y obtener la respuesta
+            // Envia la solicitud y obtener la respuesta
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
 
-        // Verificar si la respuesta fue exitosa (código 200)
+        // Verifica si la respuesta fue exitosa (código 200)
         if (response.statusCode() == 200) {
             String respuestaConVinos = response.body();
             return parsearRespuesta(respuestaConVinos);

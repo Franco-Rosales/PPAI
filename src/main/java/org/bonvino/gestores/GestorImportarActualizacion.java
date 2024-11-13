@@ -54,7 +54,7 @@ public class GestorImportarActualizacion  implements ISujetoActualizacionDeBodeg
 
     private Date getFechaHoraActual() {
         this.fechaHoraActual = new Date();
-        return fechaHoraActual; // Devuelve la fecha actual
+        return fechaHoraActual;
     }
 
     public void tomarSeleccionBodega(String bodegaSeleccionada, PantallaImportarActualizacion pantalla) {
@@ -105,19 +105,16 @@ public class GestorImportarActualizacion  implements ISujetoActualizacionDeBodeg
     }
 
     public void actualizarVinoExistente(Vino vinoExistente,Vino vinoActualizado){
-        System.out.println("Actualizar Vino Existente");
         Bodega bodega = vinoExistente.getBodega();
         bodega.actualizarVino(vinoExistente, vinoActualizado);
     }
 
     public Varietal buscarVarietal (Vino vino){
-        System.out.println("Buscar Varietal");
         Varietal varietalActualizado = vino.getVarietal();
         return varietalActualizado != null ? varietalActualizado.esVarietalActualizacion() : null;
     }
 
     public List<Maridaje> buscarMaridaje(Vino vino){
-        System.out.println("Buscar Maridaje");
         List<Maridaje> maridajesActualizados = new ArrayList<>();
         List<Maridaje> maridajes = vino.getMaridajes();
         for(Maridaje maridaje : maridajes){
@@ -131,7 +128,6 @@ public class GestorImportarActualizacion  implements ISujetoActualizacionDeBodeg
     }
 
     public void crearVino(Vino vino, Varietal varietal, List<Maridaje> maridajes){
-        System.out.println("Crear Vinos");
         Bodega bodega = vino.getBodega();
         bodega.crearVino(vino.getNombre(), vino.getImagenEtiqueta(), vino.getPrecioARS(), vino.getNotaCataBodega(), vino.getAniada(), varietal, maridajes);
     }
@@ -140,7 +136,6 @@ public class GestorImportarActualizacion  implements ISujetoActualizacionDeBodeg
 
     public void buscarEnofilosSuscriptosABodega(String bodegaSeleccionada){
         EntityManager em = emf.createEntityManager();
-
 
         // buscar todos los enofilos de la base de datos
         try{

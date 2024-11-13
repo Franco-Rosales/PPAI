@@ -52,8 +52,8 @@ public class PantallaInicial {
         boton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.dispose();  // Cierra la pantalla inicial
                 PantallaImportarActualizacion pantalla = new PantallaImportarActualizacion();
+                frame.dispose();
                 pantalla.tomarOpcionActualizacionVinos();
             }
         });

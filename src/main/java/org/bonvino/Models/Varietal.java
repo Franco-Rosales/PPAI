@@ -66,14 +66,14 @@ public class Varietal {
 
         } catch (Exception e) {
             if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback(); // En caso de error, revertimos la transacción
+                em.getTransaction().rollback();
             }
             e.printStackTrace();
         } finally {
-            em.close(); // Cerramos el EntityManager
+            em.close();
         }
 
-        return varietal; // Retornamos el varietal encontrado o recién creado
+        return varietal;
     }
 
 

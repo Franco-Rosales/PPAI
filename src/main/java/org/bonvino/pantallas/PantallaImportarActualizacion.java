@@ -33,11 +33,10 @@ public class PantallaImportarActualizacion {
         nuevaVentana.setLocationRelativeTo(null);
         nuevaVentana.setLayout(new BorderLayout());
 
-        // Crear una lista para mostrar las bodegas
+        // Crea una lista para mostrar las bodegas
         listaBodegas = new JList<>();
         listaBodegas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        // Personalizar el renderizador de celdas para estilizar los elementos de la lista
         listaBodegas.setCellRenderer(new DefaultListCellRenderer() {
             @Override
             public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
@@ -50,44 +49,43 @@ public class PantallaImportarActualizacion {
                 ));
                 label.setOpaque(true);
                 label.setBackground(Color.WHITE);
-                label.setIcon(new ImageIcon("path/to/icon.png")); // Añadir ícono (opcional)
                 if (isSelected) {
-                    label.setBackground(new Color(220, 220, 220)); // Color de fondo cuando está seleccionado
+                    label.setBackground(new Color(220, 220, 220));
                 }
                 return label;
             }
         });
 
-        // Crear un panel principal para contener todos los componentes
+        // Crea un panel principal para contener todos los componentes
         JPanel panelPrincipal = new JPanel();
         panelPrincipal.setLayout(new BorderLayout());
         panelPrincipal.setBorder(new EmptyBorder(20, 20, 20, 20));
         panelPrincipal.setBackground(new Color(245, 245, 245)); // Fondo claro
 
-        // Añadir un título a la ventana
+        // Añade un título a la ventana
         JLabel tituloLabel = new JLabel("Bodegas Actualizables");
         tituloLabel.setFont(new Font("SansSerif", Font.BOLD, 24));
         tituloLabel.setForeground(new Color(34, 34, 34)); // Color del texto
         tituloLabel.setHorizontalAlignment(SwingConstants.CENTER);
         panelPrincipal.add(tituloLabel, BorderLayout.NORTH);
 
-        // Añadir un mensaje de advertencia
+        // Añade un mensaje de advertencia
         JLabel advertenciaLabel = new JLabel("Adevertencia:  " +
                 "Seleccione solo una bodega a la vez!!");
         advertenciaLabel.setFont(new Font("SansSerif", Font.PLAIN, 14));
-        advertenciaLabel.setForeground(new Color(255, 0, 0)); // Color rojo para advertencia
+        advertenciaLabel.setForeground(new Color(255, 0, 0));
         advertenciaLabel.setHorizontalAlignment(SwingConstants.CENTER);
         panelPrincipal.add(advertenciaLabel, BorderLayout.CENTER);
 
-        // Agregar la lista de bodegas dentro de un JScrollPane al panel principal
+        // Agrega la lista de bodegas dentro de un JScrollPane al panel principal
         JScrollPane scrollPane = new JScrollPane(listaBodegas);
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
         panelPrincipal.add(scrollPane, BorderLayout.SOUTH);
 
-        // Añadir el panel principal a la ventana
+        // Añade el panel principal a la ventana
         nuevaVentana.getContentPane().add(panelPrincipal);
 
-        // Mostrar la ventana
+        // Muestra la ventana
         nuevaVentana.setVisible(true);
 
         this.gestor.opcionActualizacionVinos(this);
@@ -106,7 +104,7 @@ public class PantallaImportarActualizacion {
         }
         listaBodegas.setModel(listModel);
 
-        // Crear un botón para confirmar la selección
+        // Crea un botón para confirmar la selección
         JButton botonSeleccionar = new JButton("Seleccionar Bodega");
         botonSeleccionar.setFont(new Font("SansSerif", Font.BOLD, 14));
         botonSeleccionar.setFocusPainted(false);
@@ -126,7 +124,7 @@ public class PantallaImportarActualizacion {
             }
         });
 
-        // Crear un panel para el botón y agregarlo a la ventana
+        // Crea un panel para el botón y agregarlo a la ventana
         JFrame ventana = (JFrame) SwingUtilities.getWindowAncestor(listaBodegas);
         JPanel panelBoton = new JPanel();
         panelBoton.setLayout(new FlowLayout(FlowLayout.CENTER));
@@ -159,7 +157,7 @@ public class PantallaImportarActualizacion {
         JPanel panelRetroceso = new JPanel(new FlowLayout(FlowLayout.LEFT));
         panelRetroceso.setBackground(new Color(245, 245, 245));
 
-        JButton botonRetroceso = new JButton("⬅"); // Flecha de retroceso
+        JButton botonRetroceso = new JButton("⬅");
         botonRetroceso.setFont(new Font("SansSerif", Font.BOLD, 18));
         botonRetroceso.setFocusPainted(false);
         botonRetroceso.setForeground(Color.BLACK);
@@ -178,7 +176,6 @@ public class PantallaImportarActualizacion {
         panelRetroceso.add(botonRetroceso);
         frame.add(panelRetroceso, BorderLayout.NORTH);
 
-        // Código restante de la pantalla
         JPanel panelNombreBodega = new JPanel();
         panelNombreBodega.setBackground(new Color(245, 245, 245));
         panelNombreBodega.setBorder(new EmptyBorder(20, 20, 20, 20));
@@ -188,7 +185,7 @@ public class PantallaImportarActualizacion {
         panelNombreBodega.add(labelNombreBodega);
         frame.add(panelNombreBodega, BorderLayout.CENTER);
 
-        // Código para mostrar el resumen de vinos actualizados
+
         JPanel panelDatosVinos = new JPanel();
         panelDatosVinos.setLayout(new BoxLayout(panelDatosVinos, BoxLayout.Y_AXIS));
         panelDatosVinos.setBorder(BorderFactory.createTitledBorder(
@@ -211,7 +208,7 @@ public class PantallaImportarActualizacion {
             return false;
         }
 
-        // Estilo para los datos de los vinos
+
         for (String vinoInfo : vinosActualizadosOCreados) {
             JPanel vinoPanel = new JPanel();
             vinoPanel.setLayout(new BoxLayout(vinoPanel, BoxLayout.Y_AXIS)); // Usa BoxLayout en Y para apilar elementos
@@ -226,43 +223,30 @@ public class PantallaImportarActualizacion {
             titleLabel.setBorder(new EmptyBorder(10, 0, 10, 0));
             vinoPanel.add(titleLabel);
 
-            // Procesar la información de cada vino para mostrarla como lista
-            // Eliminar las comas para todos los campos excepto "Maridaje"
-            String formattedVinoInfo = vinoInfo.replace(", ", "<br> * "); // Reemplazar comas por salto de línea con asterisco
 
-            // Para Maridaje, debemos asegurarnos de que las comas se mantengan y no haya asteriscos
+            String formattedVinoInfo = vinoInfo.replace(", ", "<br> * ");
+
+
             if (formattedVinoInfo.contains("Maridajes:")) {
-                // Procesamos Maridaje para mantener las comas en una sola línea y eliminar los asteriscos
                 String[] parts = formattedVinoInfo.split("Maridajes:");
-                String maridajes = parts[1].replace("<br>", ", ");  // Reemplazar saltos de línea con coma y espacio
-                formattedVinoInfo = parts[0] + "Maridajes:" + maridajes;  // Reintegrar Maridaje con comas intactas
+                String maridajes = parts[1].replace("<br>", ", ");
+                formattedVinoInfo = parts[0] + "Maridajes:" + maridajes;
             }
 
-            // Preparar la información en formato HTML para mostrar como lista
-            formattedVinoInfo = "<html>* " + formattedVinoInfo.replace("\n", "<br>* ") + "</html>"; // Formato de lista con asteriscos
-
-            // Eliminar los asteriscos de Maridaje
+            formattedVinoInfo = "<html>* " + formattedVinoInfo.replace("\n", "<br>* ") + "</html>";
             formattedVinoInfo = formattedVinoInfo.replace("Maridajes:", "Maridajes:").replace("*", "");
 
-            // Crear un JLabel con el texto formateado
             JLabel textArea = new JLabel(formattedVinoInfo);
             textArea.setFont(new Font("SansSerif", Font.PLAIN, 14));
-            textArea.setForeground(new Color(34, 34, 34)); // Color del texto
+            textArea.setForeground(new Color(34, 34, 34));
 
-            textArea.setBackground(new Color(250, 250, 250)); // Fondo más claro
-
+            textArea.setBackground(new Color(250, 250, 250));
             vinoPanel.add(textArea);
-
-            // Añadir un espacio entre los vinos
             vinoPanel.add(Box.createRigidArea(new Dimension(0, 10)));
-
-            // Agregar el panel del vino al panel principal
             panelDatosVinos.add(vinoPanel);
-            panelDatosVinos.add(Box.createRigidArea(new Dimension(0, 20))); // Espacio entre vinos
+            panelDatosVinos.add(Box.createRigidArea(new Dimension(0, 20)));
         }
 
-
-        // Agregar el panel de datos de los vinos a un JScrollPane para scroll
         JScrollPane scrollPaneVinos = new JScrollPane(panelDatosVinos);
         scrollPaneVinos.setBorder(BorderFactory.createEmptyBorder());
         frame.add(scrollPaneVinos, BorderLayout.CENTER);

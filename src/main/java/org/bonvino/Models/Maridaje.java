@@ -55,14 +55,14 @@ public class Maridaje {
 
         } catch (Exception e) {
             if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback(); // En caso de error, revertimos la transacción
+                em.getTransaction().rollback();
             }
             e.printStackTrace();
         } finally {
-            em.close(); // Cerramos el EntityManager
+            em.close();
         }
 
-        return maridaje; // Retornamos el maridaje encontrado o recién creado
+        return maridaje;
     }
 
 
